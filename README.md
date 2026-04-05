@@ -12,10 +12,22 @@ To run the example application with *Docker* use command:
 docker compose up -d
 ```
 
-To run PHP Code Sniffer use command:
+To run *PHP Code Sniffer* use command:
 
 ```console
 docker compose exec -w /var/www application phpcs
+```
+
+To update `Composer dependencies` use command:
+
+```console
+docker compose exec --user www-data -w /var/www application composer update
+```
+
+To log into the *Docker container* use command:
+
+```console
+docker exec -it psr-1-example-app /bin/bash
 ```
 
 **License**

@@ -8,7 +8,7 @@
     <config name="installed_paths" value="/var/www/vendor/squizlabs/php_codesniffer/src/Standards"/>
 
     <file>src</file>
-    <file>html</file>
+    <file>public</file>
 
     <rule ref="PSR1"/>
 </ruleset>
