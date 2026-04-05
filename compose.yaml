@@ -1,0 +1,21 @@
+name: psr-1-example
+
+services:
+
+  application:
+    container_name: psr-1-example-app
+    build: .
+    ports:
+      - "8080:80" # browse at http://localhost:8080
+    volumes:
+      # source code
+      - ./src:/var/www/src
+      - ./public:/var/www/html
+      # composer dependencies configuration
+      - ./composer.json:/var/www/composer.json
+      - vendor:/var/www/vendor
+      # PHP Code Sniffer ruleset
+      - ./phpcs.xml:/var/www/phpcs.xml
+
+volumes:
+  vendor: # isolates vendor/ from bind-mount interference
