@@ -65,7 +65,7 @@ This project is licensed under the GPL-3.0 - see [LICENSE.md](LICENSE.md).
 ##### ✤ Character encoding
 
 **Files MUST use only `UTF-8` without `BOM` for PHP code.**
-[🔗](https://www.php-fig.org/psr/psr-1/#1-overview)
+[🔗](https://www.php-fig.org/psr/psr-1/#22-character-encoding)
 
 [UTF-8](https://en.wikipedia.org/wiki/UTF-8) is a variable-length character encoding standard used for electronic communication.
 Defined by the [Unicode Standard](https://en.wikipedia.org/wiki/Unicode), the name is derived from *Unicode Transformation Format - 8-bit*.
@@ -221,7 +221,7 @@ class HtmlDoc
 
 ```
 
-*Example of files **executing the logic** (with *side effects*)*
+*Example of files **executing the logic** (with side effects)*
 
 **`view.php`**
 
@@ -268,5 +268,160 @@ include(__DIR__ . DIRECTORY_SEPARATOR . 'HtmlDoc.php');
 $htmlDoc = new HtmlDoc();
 
 require_once('view.php');
+
+```
+
+## Classes
+
+##### ✤ Placing class definitions in the files
+
+**Each class is in a file by itself.**
+[🔗](https://www.php-fig.org/psr/psr-1/#3-namespace-and-class-names)
+
+*Example of files with separate class definitions*
+
+**`HtmlDoc.php`**
+
+```php
+<?php
+
+class HtmlDoc
+{
+    public $languageCode = 'en-GB';
+    public $charset = 'utf-8';
+    public $language = 'english';
+    public $description = 'PSR-1 example document';
+    public $keywords = 'php,psr,psr-1';
+    public $author;
+    public $title = 'Some PSR-1 example page';
+    public $header = 'PSR-1 example';
+    public $footer = 'Copyright PHP.PSR-1.lab 2026';
+    public $content = 'Hi, there!';
+
+    public function setAuthor($htmlDocAuthor)
+    {
+        $this->author = [
+            'name' => $htmlDocAuthor->name,
+            'email' => $htmlDocAuthor->email,
+        ];
+    }
+}
+
+```
+
+**`HtmlDocAuthor.php`**
+
+```php
+<?php
+
+class HtmlDocAuthor
+{
+    const EMAIL_DOMAIN = 'php.psr1.lab';
+
+    public $name = 'Some Author';
+    public $email = 'author@' . self::EMAIL_DOMAIN;
+}
+
+```
+
+##### ✤ Class names case
+
+**Class names MUST be declared in `StudlyCaps`.**
+[🔗](https://www.php-fig.org/psr/psr-1/#3-namespace-and-class-names)
+
+**`HtmlDoc.php`**
+
+```php
+<?php
+
+class HtmlDoc
+{
+}
+
+```
+
+**`HtmlDocAuthor.php`**
+
+```php
+<?php
+
+class HtmlDocAuthor
+{
+}
+
+```
+
+### Class constants
+
+##### ✤ Class constants names case
+
+**Class constants MUST be declared in all `UPPER_CASE_WITH_UNDERSCORE_SEPARATORS`.**
+[🔗](https://www.php-fig.org/psr/psr-1/#41-constants)
+
+**`HtmlDocAuthor.php`**
+
+```php
+<?php
+
+class HtmlDocAuthor
+{
+    const EMAIL_DOMAIN = 'php.lab';
+}
+
+```
+
+### Class properties
+
+##### ✤ Properties names case
+
+PSR-1 guide intentionally avoids any recommendation regarding the use of `$StudlyCaps`, `$camelCase`, or `$under_score` property names.
+
+**Whatever naming convention is used SHOULD be applied consistently within a reasonable scope. That scope may be vendor-level, package-level, class-level, or method-level.**
+[🔗](https://www.php-fig.org/psr/psr-1/#42-properties)
+
+**`HtmlDoc.php`**
+
+```php
+<?php
+
+class HtmlDoc
+{
+    public $languageCode = 'en-GB';
+    public $charset = 'utf-8';
+    public $language = 'english';
+    public $description = 'PSR-1 example document';
+    public $keywords = 'php,psr,psr-1';
+    public $title = 'Some PSR-1 example page';
+    public $header = 'PSR-1 example';
+    public $footer = 'Copyright PHP.lab 2024';
+    public $content = 'Hi, there!';
+}
+
+```
+
+### Class methods
+
+##### ✤ Method names case
+
+**Method names MUST be declared in `camelCase`.**
+[🔗](https://www.php-fig.org/psr/psr-1/#43-methods)
+
+**`HtmlDoc.php`**
+
+```php
+<?php
+
+class HtmlDoc
+{
+    public $author;
+
+    public function setAuthor($htmlDocAuthor)
+    {
+        $this->author = [
+            'name' => $htmlDocAuthor->name,
+            'email' => $htmlDocAuthor->email,
+        ];
+    }
+}
 
 ```
