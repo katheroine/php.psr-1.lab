@@ -425,3 +425,169 @@ class HtmlDoc
 }
 
 ```
+
+## Namespaces
+
+##### ✤ Namespaces requireness
+
+**Code written for `PHP 5.2.x` and before SHOULD use the pseudo-namespacing convention of `Vendor_` prefixes on class names.**
+[🔗](https://www.php-fig.org/psr/psr-1/#3-namespace-and-class-names)
+
+**`HtmlDoc.php`**
+
+```php
+<?php
+
+class PHPLab_StandardPSR1_HtmlDoc
+{
+}
+
+```
+
+**Code written for `PHP 5.3` and after MUST use formal namespaces.**
+[🔗](https://www.php-fig.org/psr/psr-1/#3-namespace-and-class-names)
+
+**`HtmlDoc.php`**
+
+```php
+<?php
+
+namespace PHPLab\StandardPSR1;
+
+class HtmlDoc
+{
+}
+
+```
+
+##### ✤ Placing class definitions in the namespaces
+
+**Each class is in a namespace of at least one level: a top-level vendor name.**
+[🔗](https://www.php-fig.org/psr/psr-1/#3-namespace-and-class-names)
+
+**`HtmlDoc.php`**
+
+```php
+<?php
+
+namespace PHPLab\StandardPSR1;
+
+class HtmlDoc
+{
+}
+
+```
+
+**`HtmlDocAuthor.php`**
+
+```php
+<?php
+
+namespace PHPLab\StandardPSR1;
+
+class HtmlDocAuthor
+{
+}
+
+```
+
+##### ✤ Namespaces and class names autoloading convention
+
+**Namespaces and classes MUST follow an "autoloading" PSR: [[PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md), [PSR-4](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md)].**
+[🔗](https://www.php-fig.org/psr/psr-1/#3-namespace-and-class-names)
+
+The currently applicable autoloading standard is [PSR-4](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md)].
+
+In the following examples the `PHPLab` namespace part is the **vendor name** and the `StandardPSR1` part is the **package name**.
+
+**`HtmlDoc.php`**
+
+```php
+<?php
+
+namespace PHPLab\StandardPSR1;
+
+class HtmlDoc
+{
+}
+
+```
+
+**`HtmlDocAuthor.php`**
+
+```php
+<?php
+
+namespace PHPLab\StandardPSR1;
+
+class HtmlDocAuthor
+{
+}
+
+```
+
+##### Intro to the autoloading configuration
+
+The easiest way to introduce [PSR-4](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md) into the project is using the autoload mechanism built-in the [Composer](https://getcomposer.org) dependency manager.
+
+Let's say the project has the following files order:
+
+```
+.
+├── composer.json
+├── composer.lock
+├── public
+│   ├── index.php
+│   └── view.php
+├── README.md
+├── src
+│   ├── HtmlDocAuthor.php
+│   └── HtmlDoc.php
+└── vendor
+```
+
+And the `public/view.php` is included explicitly in the `public/index.php` file, which is the *front controller* of the web application.
+
+To have all the files from the `src` directory accessible in the `public/index.php` file (and also all the dependencies loaded by the Composer into the `vendor` directory by the command `composer install` or `composer update`) it requires to configure the autoloading in the `composer.json` file, like in the following snippet:
+
+**`composer.json`**
+
+```json
+{
+    "autoload": {
+        "psr-4": {
+            "PHPLab\\StandardPSR1\\": [
+                "src/"
+            ]
+        }
+    }
+}
+```
+
+then run the command:
+
+```console
+composer dump-autoload
+```
+
+and include the *Composer* autoload script to the application entry file `public/index.php`:
+
+**`public/index.php`**
+
+```php
+<?php
+
+require_once(__DIR__ . '/../vendor/autoload.php');
+
+use PHPLab\StandardPSR1\HtmlDoc;
+use PHPLab\StandardPSR1\HtmlDocAuthor;
+
+$htmlDoc = new HtmlDoc();
+$htmlDocAuthor = new HtmlDocAuthor();
+$htmlDoc->setAuthor($htmlDocAuthor);
+
+require_once('view.php');
+
+```
+
+All the classes defined in the `src` directory are now accessible in the `public/index.php` file.
