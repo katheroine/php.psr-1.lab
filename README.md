@@ -152,6 +152,45 @@ The phrase *side effects* means execution of logic not directly related to decla
 
 *Side effects* include but are not limited to: generating output, explicit use of require or include, connecting to external services, modifying `ini` settings, emitting errors or exceptions, modifying global or static variables, reading from or writing to a file, and so on.
 
+The following is an example of a file with both declarations and side effects; i.e, an example of what to avoid:
+
+```php
+<?php
+// side effect: change ini settings
+ini_set('error_reporting', E_ALL);
+
+// side effect: loads a file
+include "file.php";
+
+// side effect: generates output
+echo "<html>\n";
+
+// declaration
+function foo()
+{
+    // function body
+}
+```
+
+The following example is of a file that contains declarations without side effects; i.e., an example of what to emulate:
+
+```php
+<?php
+// declaration
+function foo()
+{
+    // function body
+}
+
+// conditional declaration is *not* a side effect
+if (! function_exists('bar')) {
+    function bar()
+    {
+        // function body
+    }
+}
+```
+
 -- [PHP Reference](https://www.php-fig.org/psr/psr-1/#23-side-effects)
 
 *WARNING! By `logic` we understand any logic of the code here, not strictly the business (domain) logic.*
