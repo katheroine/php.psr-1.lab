@@ -16,7 +16,7 @@ After creating the *Docker container* the *Composer dependencies* have to be def
 
 ```console
 docker compose exec application composer require --dev squizlabs/php_codesniffer \
-&& docker compose exec -w /var/www application composer install
+&& docker compose application composer install
 ```
 
 Tom make *PHP Code Sniffer commands* easily accessible run:
@@ -54,9 +54,11 @@ docker exec -it psr-1-example-app /bin/bash
 
 This project is licensed under the GPL-3.0 - see [LICENSE.md](LICENSE.md).
 
-**What are PSRs**
+**Official documentation**
 
 [PHP-FIG PRS-1 Official documentation](https://www.php-fig.org/psr/psr-1/)
+
+**What are PSRs**
 
 **PSR** stands for *PHP Standard Recommendation*.
 
